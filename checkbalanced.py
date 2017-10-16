@@ -141,6 +141,29 @@ class BinaryNode(object):
         # Initiate traversal
         return num_descendants(self) is not None
 
+    def is_balanced_ValueError(self):
+        """Value error soln vs. passing up None on recursive call stack."""
+
+        def _num_descendants(node):
+            """Returns # of descendants. Return None if already imbalanced."""
+
+            # Recurse. Get descendants on left. May raise exception.
+            left = _num_descendants(node.left)
+
+            # Recurse. Get descendents on right. May raise exception.
+            right = _num_descendants(node.right)
+
+            # If heights vary by > 1, imbalanced. Raise value error vs.
+                # passing up None in recursive call stack
+            if abs(left - right) > 1:
+                raise ValueError()
+
+        try:
+            _num_descendants(self)
+            return True
+        except ValueError:
+            return False
+
 
 if __name__ == '__main__':
     import doctest
