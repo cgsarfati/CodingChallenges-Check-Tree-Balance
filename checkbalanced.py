@@ -107,10 +107,39 @@ class BinaryNode(object):
     def is_balanced(self):
         """Is the tree at this node balanced?"""
 
-        # balanced if: 1) depth from ancestor to leafs differ by no more than 1
+        # balanced if depth from ancestor to leafs differ by no more than 1
         # considerations: traverse from ancestor to leafs, keep count.
-        # also need to keep track of L/R traversal. need to compare max heigh
+        # also need to keep track of L/R traversal. need to compare max height
         # of L and R paths.
+
+        def num_descendants(node):
+            """Returns # of descendants. Return None if already imbalanced."""
+
+            # BASE: not a node
+            if not node:
+                return 0
+
+            # Recurse. Get descendants on left. Fail fast.
+            left = num_descendants(node.left)
+
+            if left is None:
+                return None
+
+            # Recurse. Get descendents on right. Fail fast.
+            right = num_descendants(node.right)
+
+            if right is None:
+                return None
+
+            # If heights vary by > 1, imbalanced.
+            if abs(left - right) > 1:
+                return None
+
+            # If none of above applies, store height of deepest descendant + ourselves
+            return max(left, right) + 1
+
+        # Initiate traversal
+        return num_descendants(self) is not None
 
 
 if __name__ == '__main__':
