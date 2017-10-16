@@ -107,6 +107,11 @@ class BinaryNode(object):
     def is_balanced(self):
         """Is the tree at this node balanced?"""
 
+        # balanced if: 1) depth from ancestor to leafs differ by no more than 1
+        # considerations: traverse from ancestor to leafs, keep count.
+        # also need to keep track of L/R traversal. need to compare max heigh
+        # of L and R paths.
+
 
 if __name__ == '__main__':
     import doctest
